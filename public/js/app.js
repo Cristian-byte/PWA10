@@ -2,7 +2,6 @@
 var url = window.location.href;
 var swLocation = '/twittor/sw.js';
 
-
 if ( navigator.serviceWorker ) {
 
 
@@ -10,13 +9,8 @@ if ( navigator.serviceWorker ) {
         swLocation = '/sw.js';
     }
 
-
     navigator.serviceWorker.register( swLocation );
 }
-
-
-
-
 
 // Referencias de jQuery
 
@@ -38,9 +32,6 @@ var btnDesactivadas = $('.btn-noti-desactivadas');
 
 // El usuario, contiene el ID del hÃ©roe seleccionado
 var usuario;
-
-
-
 
 // ===== Codigo de la aplicación
 
@@ -68,8 +59,6 @@ function crearMensajeHTML(mensaje, personaje) {
 
 }
 
-
-
 // Globals
 function logIn( ingreso ) {
 
@@ -90,7 +79,6 @@ function logIn( ingreso ) {
     }
 
 }
-
 
 // Seleccion de personaje
 avatarBtns.on('click', function() {
@@ -121,7 +109,6 @@ nuevoBtn.on('click', function() {
 
 });
 
-
 // Boton de cancelar mensaje
 cancelarBtn.on('click', function() {
     if ( !modal.hasClass('oculto') ) {
@@ -149,7 +136,6 @@ postBtn.on('click', function() {
         user: usuario
     };
 
-
     fetch('api', {
         method: 'POST',
         headers: {
@@ -161,13 +147,9 @@ postBtn.on('click', function() {
     .then( res => console.log( 'app.js', res ))
     .catch( err => console.log( 'app.js error:', err ));
 
-
-
     crearMensajeHTML( mensaje, usuario );
 
 });
-
-
 
 // Obtener mensajes del servidor
 function getMensajes() {
@@ -180,15 +162,11 @@ function getMensajes() {
             posts.forEach( post =>
                 crearMensajeHTML( post.mensaje, post.user ));
 
-
         });
-
 
 }
 
 getMensajes();
-
-
 
 // Detectar cambios de conexión
 function isOnline() {
@@ -219,3 +197,50 @@ window.addEventListener('offline', isOnline );
 
 isOnline();
 
+// Notificaciones
+
+function enviarNotificacion() {
+
+    const NotificationOpts = {
+        body: 'Este es el cuerpo de la notificacion',
+        icon: 'img/icons/icon-72x72.png'
+    };
+
+    const n = new Notification('Hola Mundo', NotificationOpts);
+
+    n.onclick = () => {
+        console.log('Click');
+    };
+
+}
+
+function notificarme() {
+
+    if ( !window.Notification ) {
+        console.log('este navegador no soporta notificaciones');
+        return;
+    }
+
+    if ( Notification.permission === 'granted' ) {
+
+        // new Notification('Hola Mundo! - granted');
+        enviarNotificacion();
+
+    } else if ( Notification.permission !== 'denied' || Notification.permission === 'default') {
+
+        Notification.requestPermission( function( permission ) {
+
+            console.log(permission);
+
+            if ( permission === 'granted' ) {
+                // new Notification('Hola Mundo! - pregunta');
+                enviarNotificacion();
+            }
+
+        });
+
+    }
+
+}
+
+notificarme();
