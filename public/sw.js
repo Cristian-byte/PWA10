@@ -97,11 +97,25 @@ self.addEventListener("sync", (e) => {
 
 // Escuchar PUSH
 self.addEventListener("push", (e) => {
-  // console.log(e);
-  console.log(e.data.text());
+  //console.log(e);
+  //console.log(e.data.text());
+  const data = JSON.parse(e.data.text());
+
+  console.log(data);
 
   const title = data.titulo;
-  const options = {};
+  const options = {
+    body: data.cuerpo,
+    // icon: 'img/icons/icon-72x72.png',
+    icon: `img/avatars/${data.usuario}.jpg`,
+    badge: "img/favicon.ico",
+    image:
+      "https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/5/5b/Torre_de_los_Avengers.png/revision/latest?cb=20150626220613&path-prefix=es",
+    vibrate: [
+      125, 75, 125, 275, 200, 275, 125, 75, 125, 275, 200, 600, 200, 600,
+    ],
+    openUrl: "/",
+  };
 
   e.waitUntil(self.registration.showNotification(title, options));
 });
