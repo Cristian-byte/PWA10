@@ -198,15 +198,26 @@ window.addEventListener('offline', isOnline );
 isOnline();
 
 // Notificaciones
+function verificaSuscripcion(activadas) {
+  if (activadas) {
+    btnActivadas.removeClass("oculto");
+    btnDesactivadas.addClass("oculto");
+  } else {
+    btnActivadas.addClass("oculto");
+    btnDesactivadas.removeClass("oculto");
+  }
+}
+
+verificaSuscripcion();
 
 function enviarNotificacion() {
 
-    const NotificationOpts = {
-        body: 'Este es el cuerpo de la notificacion',
-        icon: 'img/icons/icon-72x72.png'
+    const notificationOpts = {
+      body: "Este es el cuerpo de la notificacion",
+      icon: "img/icons/icon-72x72.png",
     };
 
-    const n = new Notification('Hola Mundo', NotificationOpts);
+    const n = new Notification("Hola Mundo", notificationOpts);
 
     n.onclick = () => {
         console.log('Click');
@@ -243,4 +254,4 @@ function notificarme() {
 
 }
 
-notificarme();
+//notificarme();
