@@ -2,7 +2,6 @@
 var express = require('express');
 var router = express.Router();
 
-
 const mensajes = [
 
   {
@@ -12,7 +11,6 @@ const mensajes = [
   }
 
 ];
-
 
 // Get mensajes
 router.get('/', function (req, res) {
@@ -33,13 +31,34 @@ router.post('/', function (req, res) {
 
   console.log(mensajes);
 
-
   res.json({
     ok: true,
     mensaje
   });
 });
 
+// Almacenar la suscripción
+router.post('/subscribe', (req, res) => {
 
+  res.json('subscribe');
+
+});
+
+// Almacenar la suscripción
+router.get('/key', (req, res) => {
+
+  res.send('key publico');
+
+});
+
+
+// Envar una notificación PUSH a las personas
+// que nosotros queramos
+// ES ALGO que se controla del lado del server
+router.post('/push', (req, res) => {
+
+  res.json('key publico');
+
+});
 
 module.exports = router;
