@@ -206,6 +206,7 @@ isOnline();
 
 // Notificaciones
 function verificaSuscripcion(activadas) {
+    console.log(activadas);
   if (activadas) {
     btnActivadas.removeClass("oculto");
     btnDesactivadas.addClass("oculto");
@@ -294,9 +295,17 @@ btnDesactivadas.on( 'click', function() {
         .then( res => res.toJSON() )
         .then( suscripcion => {
 
-            console.log(suscripcion);
+            //console.log(suscripcion);
 
-            verificaSuscripcion(suscripcion);
+            //verificaSuscripcion(suscripcion);
+            
+            fetch("api/subscribe", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(suscripcion),
+            })
+              .then(verificaSuscripcion)
+              .catch(console.log());
 
         });
 
