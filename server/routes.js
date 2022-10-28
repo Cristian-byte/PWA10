@@ -67,7 +67,15 @@ router.get('/key', (req, res) => {
 // ES ALGO que se controla del lado del server
 router.post('/push', (req, res) => {
 
-  res.json('key publico');
+  const post = {
+    titulo: req.body.titulo,
+    cuerpo: req.body.cuerpo,
+    usuario: req.body.usuario,
+  };
+
+  push.sendPush(post);
+
+  res.json(post);
 
 });
 
